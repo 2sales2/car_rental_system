@@ -1,4 +1,9 @@
+#include "Person.h"
+#include "Car.h"
+#include "Date.h"
+
 int generate_new_RID();
+
 class RentRegister {
 
     public:
