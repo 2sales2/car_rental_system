@@ -43,7 +43,7 @@ class Car {
             }
 
             // Validando disponibilidade
-            if (anAvailability != "Available" || anAvailability != "Unavailable") {
+            if (anAvailability != "Available" && anAvailability != "Unavailable") {
                 availability = "null";
             }
 
@@ -171,7 +171,7 @@ class Car {
 bool verify_license_plate(const std::string &aPlate) {
 
     // Validando a quantidade de digitos de uma placa levando em consideração o novo padrão do Merco-Sul
-    if(aPlate.length() < 7 || aPlate.length() > 7) {
+    if(aPlate.length() != 7) {
         return false;
     }
 

@@ -1,20 +1,18 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Person.h"
+// #include "Person.h"
 #include "Car.h"
-#include "RentRegister.h"
+// #include "RentRegister.h"
 
 class Agency {
+    public:
 
+        void registerCar(Car newCar);
+        std::vector<Car> getCarsList();
 
     private:
 
-        NaturalPerson* natural_person = nullptr;
-        LegalPerson* legal_person = nullptr;
-        Car* car;
-        RentRegister* rent_list = nullptr;
-
-        std::vector
+        std::vector<Car> carsList {} ;
 
 };
