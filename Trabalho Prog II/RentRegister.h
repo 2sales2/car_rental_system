@@ -8,110 +8,46 @@ class RentRegister {
 
     public:
         // Construtor default
-        RentRegister(): person{}, car{}, register_id{-1},days{-1},rent_date{},rent_value{0.0} {};
+        RentRegister(): person{}, car{}, register_id{-1},return_date{},rent_date{},rent_value{0.0},
+        in_debt{false},daily_rate{0.0},discount{0.0} {};
 
-        // Construtor com parâmetros (1)
-        RentRegister(Person aperson, Car acar, int ID, int days_with_car,Date date, double rent):
-        person{aperson},car{acar},register_id{ID},rent_date{date} {
+        // Construtor com parâmetros
+        RentRegister(Person* aperson, Car acar, int ID,Date R_date,Date date, double aRent_value,
+        bool debt, double aDaily_rate, double aDiscount):
+        person{aperson},car{acar},register_id{ID},return_date{R_date},rent_date{date},in_debt{debt} {
 
-
-             // Validando o tempo que o cliente ficou com o carro
-            if (days_with_car < 0) {
-                days = -1;
-            }
-
-            else {
-                days = days_with_car;
-            }
-
-            // Validando o valor do aluguél
-            if (rent < 0) {
+            if (aRent_value < 0) {
                 rent_value = 0.0;
             }
-
-            else {
-                rent_value = rent;
-            }
-
-        }
-
-        // Construtor com parâmetros (2)
-        RentRegister(std::string name,
-                     std::string adress,
-                     std::string phone_number,
-                     int system_id,
-                     std::string license_plate,
-                     int year,
-                     std::string model,
-                     double km,
-                     std::string availability,
-                     std::string observations,
-                     int R_ID,
-                     int days_with_car,
-                     int aDay,
-                     int aMonth,
-                     int aYear,
-                     double rent): person{name,adress,phone_number,system_id},
-                                   car{license_plate,year,model,km,availability,observations},
-                                   register_id{R_ID},
-                                   rent_date{aDay,aMonth,aYear} {
-
-            // Validando o tempo que o cliente ficou com o carro
-            if (days_with_car < 0) {
-                days = -1;
-            }
-
-            else {
-                days = days_with_car;
-            }
-
-            // Validando o valor do aluguél
-            if (rent < 0) {
-                rent_value = 0.0;
-            }
-
-            else {
-                rent_value = rent;
-            }
-    }
-
-        // Construtor de cópia
-        RentRegister(const RentRegister &aRegister): person{aRegister.person},car{aRegister.car},
-        register_id{aRegister.register_id},days{aRegister.days},rent_date{aRegister.rent_date},
-        rent_value{aRegister.rent_value} {}
-
-        // --- Getters ---
-        std::string getTenant() {
             
-            std::string infos = "Tenant's name: " + person.getName() + "\n" +
-                                "Tenant's adress: " + person.getAdress() + "\n" +
-                                "Tenant's phone: " + person.getPhone() + "\n" +
-                                "Tenant's ID: " + std::to_string(person.getID()) + "\n";
+            else {
+                rent_value = aRent_value;
+            }
 
-            return infos;
+            if (aDaily_rate < 0) {
+                daily_rate = 0.0;
+            }
+            
+            else {
+                daily_rate = aDaily_rate;
+            }
+
+
+            if (aDiscount< 0) {
+                discount = 0.0;
+            }
+            
+            else {
+                discount = aDiscount;
+            }
         }
-
-        std::string getRCar() {
-
-            std::string infos = "License plate: " + car.getPlate() + "\n" +
-                                "Year: " + std::to_string(car.getYear()) + "\n" +
-                                "Model: " + car.getModel() + "\n" +
-                                "Km: " + std::to_string(car.getKm()) + "\n" +
-                                "Availability: " + car.getAvailability() + "\n" +
-                                "Observations: " + car.getObservations() + "\n"; 
-
-            return infos;
-
-        }
+       
 
         int getRentID() {
 
             return register_id;
         }
 
-        int getPeriod() {
-            return days;
-        }
 
         std::string getRentdate() {
             return rent_date.toString();
@@ -122,11 +58,10 @@ class RentRegister {
         }
 
         // --- Setters ---
-        void setTenant(std::string name,std::string adress,std::string phone) {
-            person.setName(name);
-            person.setAdress(adress);
-            person.setPhone(phone);
-            person.generateID();
+        void setTenant(Person *aPerson){
+            
+            person = aPerson;
+            
         }
 
         void setRCar(std::string plate,int year,std::string model, double km, std::string availability,std::string observations) {
@@ -166,13 +101,15 @@ class RentRegister {
 
     private:
         // Dados-membro
-        Person person;
+        Person* person;
         Car car;
         int register_id;
-        int days;
+        Date return_date;
         Date rent_date;
-        double rent_value;
-
+        double rent_value; // valor do aluguél
+        bool in_debt = false; // booleano para identificar se o cliente está endividado
+        double daily_rate; // valor da diária
+        double discount; // valor do desconto
 
 };
 
