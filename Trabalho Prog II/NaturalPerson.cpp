@@ -1,6 +1,7 @@
 #include "Person.h"
 #include "NaturalPerson.h"
 #include <iostream>
+
 // ---- Getters ----
 std::string NaturalPerson::getCPF() {
     return CPF;
@@ -78,7 +79,10 @@ int main() {
 
     NaturalPerson Ronaldo {"Ronaldo","Rua A","57756475","34567890234",3};
 
-    std::cout << Ronaldo.getCPF();
+
+    std::cout << Ronaldo.getName() << "\n";
+    std::cout << Ronaldo.getID() << "\n";
+    std::cout << Ronaldo.getCPF() << "\n";
     std::cout << Ronaldo.getRelationship();
 
 }

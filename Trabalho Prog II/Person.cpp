@@ -43,10 +43,3 @@ int generate_new_ID() {
     return std::stoi(new_id);
 
 }
-
-int main(){
-    Person a{"PEDRO" , "RUA 1 CASA 12 " , "66999352079" , } ;
-
-    std::cout << a.toString() << std::endl ;
-
-}
