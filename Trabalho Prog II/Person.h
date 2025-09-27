@@ -10,57 +10,37 @@ class Person {
     public:
 
         // Construtor default
-        Person(): name{"null"},adress{"null"},phone_number{"null"},system_id{-1} {}
+        Person(): name{"null"},adress{"null"},phone_number{"null"},system_id{generate_new_ID()} {}
 
         // Construtor com parâmetros
-        Person(std::string aName, std::string anAdress, std::string aPhoneNumber, int anID):
-        name{aName},adress{anAdress},phone_number{aPhoneNumber},system_id{anID} {}
+        Person(std::string aName, std::string anAdress, std::string aPhoneNumber):
+        name{aName},adress{anAdress},phone_number{aPhoneNumber},system_id{generate_new_ID()} {}
 
         // Construtor de cópia
         Person(const Person &aPerson): name{aPerson.name},adress{aPerson.adress},
         phone_number{aPerson.phone_number}, system_id{aPerson.system_id} {}
+        
+        // --- Getters ---
+        std::string getName();
 
+        std::string getAdress();
+
+        std::string getPhone();
+
+        int getID();
+        
         // Destrutor
         ~Person() {}
 
-        // --- Getters ---
-        std::string getName() {
-            return name;
-        }
-
-        std::string getAdress() {
-            return adress;
-        }
-
-        std::string getPhone() {
-            return phone_number;
-        }
-
-        int getID() {
-            return system_id;
-        }
-
         //--- Setters ---
-        void setName(std::string aName) {
-            name = aName;
-        }
-
-        void setAdress(std::string anAdress) {
-            adress = anAdress;
-        }
-
-        void setPhone(std::string aPhone) {
-            phone_number = aPhone;
-        }
-
-        void generateID() {
-            system_id = generate_new_ID();
-
-        }
+        void setName(std::string aName);
+        void setAdress(std::string anAdress);
+        void setPhone(std::string aPhone);
+        void generateID();
 
         virtual std::string toString();
 
-    private:
+    protected:
     // Dados-membro
         std::string name;
         std::string adress;
@@ -68,20 +48,3 @@ class Person {
         int system_id;
 
 };
-
-int generate_new_ID() {
-
-    // Códigos de clientes terão prefixo 1 no inicio de cada ID
-    std::string new_id{"1"};
-
-    std::random_device seed{};
-    std::default_random_engine engine{seed()};
-    std::uniform_int_distribution generator{1000,9999};
-
-    int ID = generator(engine);
-
-    new_id += std::to_string(ID);
-
-    return std::stoi(new_id);
-
-}

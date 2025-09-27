@@ -4,6 +4,8 @@ bool verify_license_plate(const std::string &aPlate);
 
 class Car {
 
+    
+    friend class RentRegister;
     public:
         // Construtor default
         Car()

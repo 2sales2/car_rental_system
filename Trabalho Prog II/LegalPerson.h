@@ -1,58 +1,58 @@
+#include <string>
 
-bool verify_cnpj(const std::string &aCNPJ);
+bool verifyCnpj(const std::string &aCNPJ);
 
 class LegalPerson: public Person {
     
     friend class RentRegister;
     public:
         // Construtor default
-        LegalPerson(): CNPJ{"null"} {}
+        LegalPerson(): CNPJ{"null"},relationLevel{0} {}
 
         // Construtor com parâmetros
-        LegalPerson(std::string name, std::string adress, std::string phone_number,int system_id, std::string aCNPJ):
-        Person(name,adress,phone_number,system_id){
+        LegalPerson(std::string name, std::string adress, std::string phone_number,int system_id, std::string aCNPJ , int aRelationLevel )
+            :Person(name,adress,phone_number,system_id){
             
             // Validando CNPJ
-            if (verify_cnpj(aCNPJ) == true) {
+            if (verifyCnpj(aCNPJ) == true) {
                 CNPJ = aCNPJ;
             }
 
             else {
                 CNPJ = "null";
+            }
+        
+            if(aRelationLevel >= 0 && aRelationLevel <= 5 ){
+                relationLevel = aRelationLevel;
+            }
+            else
+            {
+                relationLevel = 0 ; //setado para o nivel mais baixo de relacao
             }
         }
 
         // Construtor de cópia
-        LegalPerson(const LegalPerson &person): Person{person},CNPJ{person.CNPJ} {}
-
-        // Destrutor
-        ~LegalPerson() {}
-
+        LegalPerson(const LegalPerson &person): Person{person},CNPJ{person.CNPJ}, relationLevel{person.relationLevel} {}
+        
         // --- Getters ---
-        std::string getCNPJ() {
-            return CNPJ;
-        }
+        std::string getCNPJ();
+        int getRelationLevel();
 
         // --- Setters ---
-        void setCNPJ(std::string aCNPJ) {
+        void setCNPJ(std::string aCNPJ);
+        void setRelationLevel(int newLevel);
 
-            // Validando CNPJ
-            if (verify_cnpj(aCNPJ) == true) {
-                CNPJ = aCNPJ;
-            }
+        std::string toString();        
 
-            else {
-                CNPJ = "null";
-            }
-        }
+        ~LegalPerson() {}
 
     private:
         // Dados membro
         std::string CNPJ;
-
+        int relationLevel ;
 };
 
-bool verify_cnpj(const std::string &aCNPJ) {
+bool verifyCnpj(const std::string &aCNPJ) {
 
     int number_of_digits{0};
 
