@@ -103,6 +103,8 @@ class RentRegister {
 
 
 
+
+
     private:
         // Dados-membro
         Person* person;

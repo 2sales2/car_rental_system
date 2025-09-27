@@ -58,6 +58,8 @@ class Person {
 
         }
 
+        virtual std::string toString();
+
     private:
     // Dados-membro
         std::string name;

@@ -1,3 +1,5 @@
+#include <string>
+
 bool verify_cpf(const std::string &aCPF);
 
 class NaturalPerson: public Person {
@@ -73,11 +75,14 @@ class NaturalPerson: public Person {
 
         }
 
+        std::string toString();
+
     private:
         // Dados-membro
         std::string CPF;
         int costumer_relationship;
         
+
 };
 
 bool verify_cpf(const std::string &aCPF) {
