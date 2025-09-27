@@ -23,6 +23,8 @@ void Car::setPlate(const std::string &aPlate) {
     }
 }
 
+
+
 void Car::setYear(int aYear) {
     if (aYear < 1886) {
         year = -1;
@@ -44,6 +46,10 @@ void Car::setKm(int aKm) {
     else {
         km = aKm;
     }
+}
+
+void Car::setAvailability(bool anAvailability) {
+    availability = anAvailability;
 }
 
 void Car::setObservations(std::string anObservation) {
@@ -79,3 +85,9 @@ std::string Car::toString(){
     return output ;
 }
 
+void Car::updateKM(int new_km) {
+
+    if (new_km > km) {
+        km = new_km;
+    }
+}
