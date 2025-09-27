@@ -39,8 +39,14 @@ void NaturalPerson::setRelationship(int aRelationship) {
 
 std::string NaturalPerson::toString(){
 
-    std::string output = "CPF: " + CPF + "\n" + 
-                         "NÍVEL DE RELACIONAMENTO: " + std::to_string(costumer_relationship) + "\n";
+    std::string output = 
+        
+        "PESSOA FISICA \nNOME : " + name + "\n" +
+        "ENDERECO : " + adress + "\n" +
+        "TELEFONE : " + phone_number + "\n" +
+        "CPF: " + CPF + "\n" + 
+        "NÍVEL DE RELACIONAMENTO: " + std::to_string(costumer_relationship) + "\n" +
+        "ID : " + std::to_string(system_id) + "\n" ;        
 
     return output;
 }
@@ -73,16 +79,4 @@ bool verify_cpf(const std::string &aCPF) {
     }
 
     return false;
-}
-
-int main() {
-
-    NaturalPerson Ronaldo {"Ronaldo","Rua A","57756475","34567890234",3};
-
-
-    std::cout << Ronaldo.getName() << "\n";
-    std::cout << Ronaldo.getID() << "\n";
-    std::cout << Ronaldo.getCPF() << "\n";
-    std::cout << Ronaldo.getRelationship();
-
 }

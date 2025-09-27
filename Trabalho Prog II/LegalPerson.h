@@ -1,3 +1,4 @@
+#include "Person.h"
 #include <string>
 
 bool verifyCnpj(const std::string &aCNPJ);
@@ -7,11 +8,11 @@ class LegalPerson: public Person {
     friend class RentRegister;
     public:
         // Construtor default
-        LegalPerson(): CNPJ{"null"},relationLevel{0} {}
+        LegalPerson(): CNPJ{"null"},custumer_relationship{0} {}
 
         // Construtor com parâmetros
-        LegalPerson(std::string name, std::string adress, std::string phone_number,int system_id, std::string aCNPJ , int aRelationLevel )
-            :Person(name,adress,phone_number,system_id){
+        LegalPerson(std::string name, std::string adress, std::string phone_number, std::string aCNPJ , int aRelationLevel )
+            :Person(name,adress,phone_number){
             
             // Validando CNPJ
             if (verifyCnpj(aCNPJ) == true) {
@@ -23,16 +24,16 @@ class LegalPerson: public Person {
             }
         
             if(aRelationLevel >= 0 && aRelationLevel <= 5 ){
-                relationLevel = aRelationLevel;
+                custumer_relationship = aRelationLevel;
             }
             else
             {
-                relationLevel = 0 ; //setado para o nivel mais baixo de relacao
+                custumer_relationship = 0 ; //setado para o nivel mais baixo de relacao
             }
         }
 
         // Construtor de cópia
-        LegalPerson(const LegalPerson &person): Person{person},CNPJ{person.CNPJ}, relationLevel{person.relationLevel} {}
+        LegalPerson(const LegalPerson &person): Person{person},CNPJ{person.CNPJ}, custumer_relationship{person.custumer_relationship} {}
         
         // --- Getters ---
         std::string getCNPJ();
@@ -49,13 +50,13 @@ class LegalPerson: public Person {
     private:
         // Dados membro
         std::string CNPJ;
-        int relationLevel ;
+        int custumer_relationship ;
 };
 
 bool verifyCnpj(const std::string &aCNPJ) {
 
     int number_of_digits{0};
-
+    int custumer_relationship ;
     // Validando CPF
     if (aCNPJ.length() < 14 || aCNPJ.length() > 14) {
         return false;
