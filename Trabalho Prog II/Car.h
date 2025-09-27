@@ -83,12 +83,17 @@ class Car {
 
         void setKm(int aKm);
 
+        void setAvailability(bool anAvailability);
+
         void setObservations(std::string anObservation);
 
         void setPrice(double aPrice);
 
         //vizualizar dados como string
         std::string toString();
+
+        // Método para atualizar kilometragem
+        void updateKM(int new_km);
 
     private:
         //Dados-membro

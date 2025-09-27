@@ -16,35 +16,54 @@ std::vector<Car> Agency::getCarsList(){
 
 
 // Função que obtém um carro pela placa
-Car Agency::get_car_by_plate(std::string plate) {
+Car* Agency::get_car_by_plate(std::string plate) {
+
+    if (carsList.empty()) {
+        return NULL;
+    }
 
     for (int i{0}; i < carsList.size(); i++) {
 
         // Busca um carro na lista de carros
         if (carsList.at(i).getPlate() == plate) {
-            return (carsList).at(i);
+            return &carsList.at(i);
         }
-    }
 
-    // Se não encontrou, retorna um carro default;
-    return Car{};
+    }
+    // Se não encontrou
+    return NULL;
+
 }
 
 // Função que obtem o carro pelo modelo
-Car Agency::get_car_by_model(std::string model) {
+Car* Agency::get_car_by_model(std::string model) {
 
     // Busca um carro na lista de carros
+    if (carsList.empty()) {
+        return NULL;
+    }
+
     for (int i{0}; i < carsList.size(); i++) {
+        
         if (carsList.at(i).getModel() == model) {
-            return carsList.at(i);
+            return &carsList.at(i);
         }
     }
 
-    // Se não encontrou, retorna um carro default;
-    return Car{};
+    return NULL;
 
 }
 
-std::string reportClients(){
+//std::string reportClients(){
     
+//}
+
+int main() {
+
+    Agency a;
+    Car c{"LLL3L33",2020,"4 RODAS", 2000.0, true,"Tem 2 portas", 100.0};
+    a.registerCar(c);
+
+    Car* found_car = a.get_car_by_model("4 RODAS");
+    std::cout << found_car->getPlate() << "\n";
 }
