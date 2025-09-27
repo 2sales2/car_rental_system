@@ -1,6 +1,7 @@
 #include "Person.h"
 #include "Car.h"
 #include "Date.h"
+#include <string>
 
 int generate_new_RID();
 
@@ -97,6 +98,9 @@ class RentRegister {
             }
 
         }
+
+        std::string toString();
+
 
 
     private:
