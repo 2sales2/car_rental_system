@@ -10,11 +10,11 @@ class Car {
         // Construtor default
         Car()
             : license_plate{"LLLNLNN"}, year{-1}, model{"null"}, km{-1}, availability{false},
-            observations{"null"} {}
+            observations{"null"},price{0.0} {}
 
         // Construtor com parâmetros
         Car(std::string aPlate, int aYear, std::string aModel, int aKm, bool anAvailability,
-            std::string anObservation)
+            std::string anObservation, double aPrice)
             
             : model{aModel}, observations{anObservation}, availability{anAvailability} { 
 
@@ -44,12 +44,21 @@ class Car {
                 km = aKm;
             }
 
+            //Validando o preço base do carro
+            if (aPrice < 0.0) {
+                price = 0.0;
+            }
+
+            else {
+                price = aPrice;
+            }
+
         }
 
         // Construtor de cópia
         Car(const Car &aCar):
             license_plate{aCar.license_plate},year{aCar.year},model{aCar.model},
-            km{aCar.km},availability{aCar.availability},observations{aCar.observations} {}
+            km{aCar.km},availability{aCar.availability},observations{aCar.observations},price{aCar.price} {}
         
         // --- Getters ---
         std::string getPlate();
@@ -63,6 +72,8 @@ class Car {
 
         std::string getObservations();
 
+        double getPrice();
+
         // --- Setters ---
         void setPlate(const std::string &aPlate);
 
@@ -73,6 +84,8 @@ class Car {
         void setKm(int aKm);
 
         void setObservations(std::string anObservation);
+
+        void setPrice(double aPrice);
 
         //vizualizar dados como string
         std::string toString();
@@ -85,6 +98,7 @@ class Car {
         int km;
         bool availability;
         std::string observations;
+        double price;
 };
 
 

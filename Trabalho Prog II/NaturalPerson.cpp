@@ -36,8 +36,6 @@ void NaturalPerson::setRelationship(int aRelationship) {
 }
 
 
-
-
 std::string NaturalPerson::toString(){
 
     std::string output = "CPF: " + CPF + "\n" + 
@@ -78,12 +76,9 @@ bool verify_cpf(const std::string &aCPF) {
 
 int main() {
 
-    NaturalPerson Ronaldo {"Ronaldo","Rua A","57756475",4874,"34567890234",3};
+    NaturalPerson Ronaldo {"Ronaldo","Rua A","57756475","34567890234",3};
 
-    std::cout << Ronaldo.getName();
-    std::cout << Ronaldo.getAdress();
     std::cout << Ronaldo.getCPF();
     std::cout << Ronaldo.getRelationship();
-    std::cout << Ronaldo.getID();
 
 }

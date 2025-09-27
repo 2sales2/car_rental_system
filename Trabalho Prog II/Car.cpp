@@ -8,6 +8,7 @@ std::string Car::getModel() {return model;}
 int Car::getKm() {return km;}
 bool Car::getAvailability() {return availability;}
 std::string Car::getObservations() {return observations;}
+double Car::getPrice() { return price;}
 
 //SETTERS
 void Car::setPlate(const std::string &aPlate) {
@@ -47,6 +48,17 @@ void Car::setKm(int aKm) {
 
 void Car::setObservations(std::string anObservation) {
     observations = anObservation;
+}
+
+void Car::setPrice(double aPrice) {
+    
+    if (aPrice < 0.0) {
+        price = 0.0;
+    }
+
+    else {
+        price = aPrice;
+    }
 }
 
 std::string Car::toString(){

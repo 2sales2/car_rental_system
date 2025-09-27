@@ -11,8 +11,9 @@ class NaturalPerson: public Person {
         NaturalPerson(): CPF{"null"},costumer_relationship{-1} {}
         
         // Construtor com parâmetros
-        NaturalPerson(std::string aName, std::string adress, std::string phone_number, int system_id,
-        std::string aCPF, int aRelationship): Person(aName,adress,phone_number,system_id) {
+        NaturalPerson(std::string aName, std::string adress, std::string phone_number,
+        std::string aCPF, int aRelationship):
+         Person(aName,adress,phone_number) {
             
             // Validando CPF
             if (verify_cpf(aCPF) == true) {
