@@ -11,8 +11,8 @@ class NaturalPerson: public Person {
         NaturalPerson(): CPF{"null"},costumer_relationship{-1} {}
         
         // Construtor com parâmetros
-        NaturalPerson(std::string name, std::string adress, std::string phone_number, int system_id,
-        std::string aCPF, int aRelationship): Person(name,adress,phone_number,system_id) {
+        NaturalPerson(std::string aName, std::string adress, std::string phone_number, int system_id,
+        std::string aCPF, int aRelationship): Person(aName,adress,phone_number,system_id) {
             
             // Validando CPF
             if (verify_cpf(aCPF) == true) {
@@ -41,42 +41,17 @@ class NaturalPerson: public Person {
         ~NaturalPerson() {}
 
         // --- Getters ---
-        std::string getCPF() {
-            return CPF;
-        }
+        std::string getCPF();
 
-        int getRelationship() {
-            return costumer_relationship;
-        }
-
+        int getRelationship();
+        
         // --- Setters ---
-        void setCPF(std::string aCPF) {
-
-            // Validando CPF
-            if (verify_cpf(aCPF) == true) {
-                CPF = aCPF;
-            }
-
-            else {
-                CPF = "null";
-            }
-        }
-
-        void setRelationship(int aRelationship) {
-
-            // Validando nivel de relacionamento
-            if (aRelationship < 1 || aRelationship > 5) {
-                costumer_relationship = -1;
-            }
-
-            else {
-                costumer_relationship = aRelationship;
-            }
-
-        }
-
+        void setCPF(std::string aCPF);
+        
+        void setRelationship(int aRelationship);
+        
         std::string toString();
-
+        
     private:
         // Dados-membro
         std::string CPF;
@@ -84,33 +59,3 @@ class NaturalPerson: public Person {
         
 
 };
-
-bool verify_cpf(const std::string &aCPF) {
-
-    int number_of_digits{0};
-
-    // Validando CPF
-    if (aCPF.length() < 11 || aCPF.length() > 11) {
-        return false;
-    }
-
-    else {
-
-        for(int i{0}; i < 11; i++) {
-
-            if(std::isdigit(aCPF.at(i))) {
-                number_of_digits++;
-            }
-        }
-
-        if (number_of_digits == 11) {
-            return true;
-        }
-
-        else {        
-            return false;
-        }
-    }
-
-    return false;
-}
