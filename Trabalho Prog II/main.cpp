@@ -1,6 +1,3 @@
-#include "Person.h"
-#include "NaturalPerson.h"
-#include "LegalPerson.h"
 #include "Car.h"
 #include "Date.h"
 #include "RentRegister.h"
@@ -8,17 +5,16 @@
 
 int main() {
 
-    Person p1;
-    LegalPerson p2;
-    NaturalPerson p3;
-    Car c1;
-    Date d1;
-    RentRegister r1;
+    Car carro;
+    
+    LegalPerson pessoa{"Dudu","Rua A","66 998823452","56789012345678",2};
+    Car c{"LLL3L33",2020,"4 RODAS", 2000.0, true,"Tem 2 portas", 100.0};
 
-    r1.generatetRID();
-    d1.setDM(1,1);
-    std::cout << d1.getDay() << "\n" << d1.getMonth() << "\n";
-    std::cout << r1.getRentID() << "\n";
+    Date data_obtencao{23,02,2025};
+    Date data_devolucao{7,3,2025};
 
+    RentRegister registro{&pessoa,c,data_devolucao,data_obtencao,500.0,false,100.0,0.01};
 
+    std::cout << registro.toString();
 }
+

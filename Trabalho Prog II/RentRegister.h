@@ -9,13 +9,13 @@ class RentRegister {
 
     public:
         // Construtor default
-        RentRegister(): person{}, car{}, register_id{-1},return_date{},rent_date{},rent_value{0.0},
+        RentRegister(): person{}, car{}, register_id{generate_new_RID()},return_date{},rent_date{},rent_value{0.0},
         in_debt{false},daily_rate{0.0},discount{0.0} {};
 
         // Construtor com parâmetros
-        RentRegister(Person* aperson, Car acar, int ID,Date R_date,Date date, double aRent_value,
+        RentRegister(Person* aperson, Car aCar,Date R_date,Date date, double aRent_value,
         bool debt, double aDaily_rate, double aDiscount):
-        person{aperson},car{acar},register_id{ID},return_date{R_date},rent_date{date},in_debt{debt} {
+        person{aperson},car{aCar},register_id{generate_new_RID()},return_date{R_date},rent_date{date},in_debt{debt} {
 
             if (aRent_value < 0) {
                 rent_value = 0.0;
@@ -43,67 +43,30 @@ class RentRegister {
             }
         }
        
-
-        int getRentID() {
-
-            return register_id;
-        }
-
-
-        std::string getRentdate() {
-            return rent_date.toString();
-        }
-
-        double getRentvalue() {
-            return rent_value;
-        }
+        // --- Getters ---
+        Person* getTenant();
+        Car getRentedCar();
+        int getRegisterID();
+        std::string getReturnDate();
+        std::string getRentDate();
+        double getRentValue();
+        bool getSituation();
+        double getDailyRate();
+        double getDiscount();
 
         // --- Setters ---
-        void setTenant(Person *aPerson){
-            
-            person = aPerson;
-            
-        }
+        void registerTenant(Person *aPerson);
+        void registerCar(Car aCar);
+        void registerRentDate(Date aDate);
+        void registerRentValue(double value);
+        void registerReturnDate(Date aDate);
+        void registerValue(double value);
+        void registerDebt(bool situation);
+        void registerDailyRate(double aDaily_rate);
+        void registerDiscount(double aDiscount);
 
-        void setRCar(std::string plate,int year,std::string model, double km, std::string availability,std::string observations) {
-
-            car.setPlate(plate);
-            car.setYear(year);
-            car.setModel(model);
-            car.setKm(km);
-            car.setAvailability(availability);
-            car.setObservations(observations);
-
-        }
-
-        void generatetRID() {
-            register_id = generate_new_RID();
-        }
-
-        void setRentdate(int day,int month,int year) {
-
-            rent_date.setDM(day,month);
-            rent_date.setYear(year);
-
-        }
-
-        void setRentvalue(double value) {
-
-            if (value < 0) {
-                rent_value = 0.0;
-            }
-
-            else {
-                rent_value = value;
-            }
-
-        }
-
+        // Método para visualizar os dados do registro
         std::string toString();
-
-
-
-
 
     private:
         // Dados-membro
@@ -119,19 +82,3 @@ class RentRegister {
 
 };
 
-int generate_new_RID() {
-
-    // Códigos de registros terão prefixo 2 no inicio de cada ID
-    std::string new_id{"2"};
-
-    std::random_device seed{};
-    std::default_random_engine engine{seed()};
-    std::uniform_int_distribution generator{1000,9999};
-
-    int ID = generator(engine);
-
-    new_id += std::to_string(ID);
-
-    return std::stoi(new_id);
-
-}
