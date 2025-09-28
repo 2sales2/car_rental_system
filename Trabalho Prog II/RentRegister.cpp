@@ -8,9 +8,9 @@ Car RentRegister::getRentedCar() {return car;}
 
 int RentRegister::getRegisterID() {return register_id;}
 
-std::string RentRegister::getReturnDate() {return return_date.toString();}
+Date RentRegister::getReturnDate() {return return_date;}
 
-std::string RentRegister::getRentDate() {return rent_date.toString();}
+Date RentRegister::getRentDate() {return rent_date;}
 
 double RentRegister::getRentValue() {return rent_value;}
 

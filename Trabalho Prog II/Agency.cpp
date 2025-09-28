@@ -1,17 +1,16 @@
 #include "Agency.h"
 
-//adiciona carro a lista / adicionarno arquivo
-void Agency::registerCar(const Car newCar){
+
+
+void Agency::registerCar(const Car &newCar){
     carsList.push_back(newCar);
 }
 
 // Adiciona um clienta na lista de clientes
-void Agency::registerClient(Person* new_client) {
-    clients.push_back(new_client);
-}
-
-std::vector<Car> Agency::getCarsList(){
-    return carsList ;
+void Agency::registerClient(std::shared_ptr<Person> newClient) {
+    if(newClient){
+        clients.push_back(newClient);
+    }
 }
 
 
@@ -55,12 +54,39 @@ Car* Agency::get_car_by_model(std::string model) {
 }
 
 
+std::string Agency::reportCarsRented(Date startPeriod , Date endPeriod){
+    int count {0};
+
+    std::string output {"RELATORIO DE CARROS ALUGADOS POR PERIODO \n"};
+    output += "INICIO : " + startPeriod.toString() + "\n" + 
+              "FIM : " + endPeriod.toString() ; 
+
+
+    for(RentRegister currentRegister: registerList){
+                
+        if(startPeriod.getYear() <= currentRegister.getRentDate().getYear() && 
+           endPeriod.getYear()  >= currentRegister.getRentDate().getYear() ){
+            
+            if(startPeriod.getMonth() <= currentRegister.getRentDate().getMonth() &&
+                endPeriod.getMonth() >= currentRegister.getRentDate().getMonth() ){
+
+                    if(startPeriod.getDay() <= currentRegister.getRentDate().getDay() &&
+                       startPeriod.getDay() >= currentRegister.getRentDate().getDay()){
+                            output +=  "\n" + currentRegister.getRentedCar().toString() + "\n" ;
+                            count++;
+                       }
+                }
+           }
+    }
+
+    output += "TOTAL : "+ std::to_string(count) + "\n";
+
+    return output ;
+}
+
+
 int main() {
 
-    Agency a;
-    Car c{"LLL3L33",2020,"4 RODAS", 2000.0, true,"Tem 2 portas", 100.0};
-    a.registerCar(c);
 
-    Car* found_car = a.get_car_by_model("4 RODAS");
-    std::cout << found_car->getPlate() << "\n";
 }
+    

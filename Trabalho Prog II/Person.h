@@ -31,7 +31,8 @@ class Person {
         
         // Destrutor
         ~Person() {}
-
+        virtual ~Person() = default;
+        
         //--- Setters ---
         void setName(std::string aName);
         void setAdress(std::string anAdress);

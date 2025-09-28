@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <memory>
 #include "Person.h"
 #include "Car.h"
 #include "RentRegister.h"
@@ -8,18 +9,18 @@
 
 class Agency {
     public:
-        void registerCar(const Car newCar);
-        std::vector<Car> getCarsList();
+                
+        void registerCar(const Car &newCar);
+        void registerClient(std::shared_ptr<Person> newClient);
         
-        void registerClient(Person* new_client);
+        Car* get_car_by_plate(std::string plate);
+        Car* get_car_by_model(std::string model);
+        
         std::string reportCarsRented(Date startPeriod , Date endPeriod);
-        Car get_car_by_plate(std::string plate);
-        Car get_car_by_model(std::string model);
-        
+
         private:
-        Car currentCar ;
-        Person* currentPerson ;
+       
         std::vector<Car> carsList {} ;
-        std::vector<Person*> clients {};
-        std::vector<RentRegister> registerList {};
+        std::vector<std::shared_ptr<Person>> clients {};
+        std::vector<RentRegister*> registerList {};
 };
