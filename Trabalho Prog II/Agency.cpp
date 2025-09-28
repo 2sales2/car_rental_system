@@ -19,7 +19,7 @@ std::vector<Car> Agency::getCarsList(){
 Car* Agency::get_car_by_plate(std::string plate) {
 
     if (carsList.empty()) {
-        return NULL;
+        return nullptr;
     }
 
     for (int i{0}; i < carsList.size(); i++) {
@@ -31,7 +31,7 @@ Car* Agency::get_car_by_plate(std::string plate) {
 
     }
     // Se não encontrou
-    return NULL;
+    return nullptr;
 
 }
 
@@ -40,7 +40,7 @@ Car* Agency::get_car_by_model(std::string model) {
 
     // Busca um carro na lista de carros
     if (carsList.empty()) {
-        return NULL;
+        return nullptr;
     }
 
     for (int i{0}; i < carsList.size(); i++) {
@@ -50,13 +50,10 @@ Car* Agency::get_car_by_model(std::string model) {
         }
     }
 
-    return NULL;
+    return nullptr;
 
 }
 
-//std::string reportClients(){
-    
-//}
 
 int main() {
 
