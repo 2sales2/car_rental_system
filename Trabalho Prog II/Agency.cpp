@@ -1,7 +1,5 @@
 #include "Agency.h"
 
-
-
 void Agency::registerCar(const Car &newCar){
     carsList.push_back(newCar);
 }
@@ -34,6 +32,8 @@ Car* Agency::get_car_by_plate(std::string plate) {
 
 }
 
+
+
 // Função que obtem o carro pelo modelo
 Car* Agency::get_car_by_model(std::string model) {
 
@@ -53,36 +53,28 @@ Car* Agency::get_car_by_model(std::string model) {
 
 }
 
+RentRegister* Agency::get_register_by_id(int searched_id) {
 
-std::string Agency::reportCarsRented(Date startPeriod , Date endPeriod){
-    int count {0};
-
-    std::string output {"RELATORIO DE CARROS ALUGADOS POR PERIODO \n"};
-    output += "INICIO : " + startPeriod.toString() + "\n" + 
-              "FIM : " + endPeriod.toString() ; 
-
-
-    for(RentRegister currentRegister: registerList){
-                
-        if(startPeriod.getYear() <= currentRegister.getRentDate().getYear() && 
-           endPeriod.getYear()  >= currentRegister.getRentDate().getYear() ){
-            
-            if(startPeriod.getMonth() <= currentRegister.getRentDate().getMonth() &&
-                endPeriod.getMonth() >= currentRegister.getRentDate().getMonth() ){
-
-                    if(startPeriod.getDay() <= currentRegister.getRentDate().getDay() &&
-                       startPeriod.getDay() >= currentRegister.getRentDate().getDay()){
-                            output +=  "\n" + currentRegister.getRentedCar().toString() + "\n" ;
-                            count++;
-                       }
-                }
-           }
+    //Verifica se o vector de registros está vazio
+    if (registerList.empty()) {
+        return nullptr;
     }
 
-    output += "TOTAL : "+ std::to_string(count) + "\n";
+    else {
+        // Retorna ponteiro para registro
+        for (int i{0}; i < registerList.size(); i++) {
+            if (searched_id == registerList.at(i)->getRegisterID()) {
 
-    return output ;
+                return registerList.at(i);
+            }
+        }
+    }
+
+
+    return nullptr;
 }
+
+
 
 
 int main() {

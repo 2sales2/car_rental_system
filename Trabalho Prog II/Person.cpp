@@ -1,20 +1,29 @@
 #include "Person.h"
 #include <iostream>
 
+// --- Getters ---
 std::string Person::getName() {return name;}
-
 std::string Person::getAdress() {return adress;}
 std::string Person::getPhone() {return phone_number;}
 int Person::getID() {return system_id;}
+int Person::getRelationship() {return costumer_relationship;}
 
 //--- Setters ---
 void Person::setName(std::string aName) {name = aName;}
-
 void Person::setAdress(std::string anAdress) {adress = anAdress;}
-
 void Person::setPhone(std::string aPhone) {phone_number = aPhone;}
-
 void Person::generateID() { system_id = generate_new_ID();}
+
+void Person::setRelationship(int level) {
+
+    if (level < 0 || level > 5) {
+        costumer_relationship = 0;
+    }
+
+    else {
+        costumer_relationship = level;
+    }
+}
 
 std::string Person::toString(){
     std::string output 
@@ -43,3 +52,4 @@ int generate_new_ID() {
     return std::stoi(new_id);
 
 }
+

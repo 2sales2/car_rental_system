@@ -7,11 +7,6 @@ std::string NaturalPerson::getCPF() {
     return CPF;
 }
 
-int NaturalPerson::getRelationship() {
-    return costumer_relationship;
-}
-
-
 //--- Setters ---
 void NaturalPerson::setCPF(std::string aCPF) {
     
@@ -25,17 +20,6 @@ void NaturalPerson::setCPF(std::string aCPF) {
         CPF = "null";
     }
 }
-
-void NaturalPerson::setRelationship(int aRelationship) {
-    if (aRelationship < 0 || aRelationship > 5) {
-        costumer_relationship = 0;
-    }
-
-    else {
-        costumer_relationship = aRelationship;
-    }
-}
-
 
 std::string NaturalPerson::toString(){
 

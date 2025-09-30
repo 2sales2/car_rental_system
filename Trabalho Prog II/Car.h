@@ -1,3 +1,6 @@
+#ifndef CAR_H
+#define CAR_H
+
 #include <string>
 
 bool verify_license_plate(const std::string &aPlate);
@@ -106,56 +109,4 @@ class Car {
         double price;
 };
 
-
-//  0  1  2  3  4  5   6
-// "L  L  L  N  L  N  N"
-bool verify_license_plate(const std::string &aPlate) {
-
-    // Validando a quantidade de digitos de uma placa levando em consideração o novo padrão do Merco-Sul
-    if(aPlate.length() != 7) {
-        return false;
-    }
-
-    else {
-
-        // Verificação de digitos de uma placa levando em conta o novo padrão do Merco-Sul
-        for (int i{0}; i < 7; i++) {
-
-            // Verifica os 3 primeiros digitos
-            if(i < 3) {
-
-                if (!std::isalpha(aPlate.at(i))) {
-                    return false;
-
-                }
-            }
-            
-            // Verifica o quarto digito
-            if (i == 3) {
-                if (!std::isdigit(aPlate.at(i))) {
-                    return false;
-                }
-            }
-
-            // Verifica o quinto digito
-            if (i == 4) {
-                if (!std::isalpha(aPlate.at(i))) {
-                    return false;
-                }
-            }
-            
-            // Verifica os dois ultimos digitos
-            if(i > 4) {
-
-                if(!std::isdigit(aPlate.at(i))) {
-                    return false;
-                }
-
-            }
-
-        } 
-    }
-
-    return true;
-    
-}
+#endif

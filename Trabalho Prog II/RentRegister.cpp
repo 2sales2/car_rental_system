@@ -4,7 +4,7 @@
 // -- GETTERS ---
 Person* RentRegister::getTenant() {return person;}
 
-Car RentRegister::getRentedCar() {return car;}
+Car* RentRegister::getRentedCar() {return car;}
 
 int RentRegister::getRegisterID() {return register_id;}
 
@@ -14,7 +14,7 @@ Date RentRegister::getRentDate() {return rent_date;}
 
 double RentRegister::getRentValue() {return rent_value;}
 
-bool RentRegister::getSituation(){return in_debt;}
+bool RentRegister::isPaid() {return paid;}
 
 double RentRegister::getDailyRate() {return daily_rate;}
 
@@ -33,7 +33,7 @@ void RentRegister::registerTenant(Person* aPerson) {
 
 }
 
-void RentRegister::registerCar(Car aCar) {car = aCar;}
+void RentRegister::registerCar(Car aCar) {car = &aCar;}
 
 void RentRegister::registerRentDate(Date aDate) {rent_date = aDate;}
 
@@ -52,8 +52,6 @@ void RentRegister::registerRentValue(double value) {
 void RentRegister::registerReturnDate(Date aDate) {return_date = aDate;}
 
 void RentRegister::registerValue(double aValue) {rent_value = aValue;}
-
-void RentRegister::registerDebt(bool situation) {in_debt = situation;}
 
 void RentRegister::registerDailyRate(double aDaily_rate) {daily_rate = aDaily_rate;}
 
@@ -78,18 +76,64 @@ int generate_new_RID() {
 
 
 std::string RentRegister::toString(){
+
+
     std::string output = "DADOS DO LOCATÁRIO:\n" + 
                           person->toString()+
                           "\nDADOS DO CARRO ALUGADO:\n" +
-                          car.toString() + 
+                          car->toString() + 
                           "\nCONTRATO:\n" +
                           "ID DO REGISTRO: " + std::to_string(register_id) + "\n" +
                           "DATA DO ALUGUÉL: " + rent_date.toString() + "\n" +
                           "DATA DE DEVOLUÇÃO:" + return_date.toString() + "\n" +
                           "VALOR DO ALUGÚEL: " +  "R$" + std::to_string(rent_value) + "\n" +
                           "VALOR DA DIÁRIA: " + "R$" + std::to_string(daily_rate) + "\n" +
-                          "STATUS DO PAGAMENTO:" +  std::to_string(car.availability) + "\n" +
                           "VALOR DO DESCONTO: " + "R$" + std::to_string(discount) + "\n";
         
     return output;
+}
+
+double RentRegister::calculate_rentValue() {
+
+    double finalPrice = car->price;
+    // Verifica se é carro do ano
+    if (car->year == 2025) {
+        finalPrice = finalPrice + ((finalPrice * 50.0) / 100.0);
+    }
+    // Verifica se o carro tem até 2 anos
+    else if (car->year == 2023 || car->year == 2024) {
+        
+        finalPrice = finalPrice + ((finalPrice * 20.0) / 100.0);
+    }
+    // Verifica os niveis de relacionamento para aplicar o desconto
+    if (person->getRelationship() == 1) {
+        discount = 0.01;
+        finalPrice = finalPrice - ((finalPrice * 1.0) / 100.0);
+    }
+
+    else if (person->getRelationship() == 2) {
+        discount = 0.03;
+        finalPrice = finalPrice - ((finalPrice * 3.0) / 100.0);
+    }
+
+    else if (person->getRelationship() == 3) {
+        discount = 0.06;
+        finalPrice = finalPrice - ((finalPrice * 6.0) / 100.0);
+        
+    }
+
+    else if (person->getRelationship() == 4) {
+        discount = 0.08;
+        finalPrice = finalPrice - ((finalPrice * 8.0) / 100.0);
+        
+    }
+
+    else if (person->getRelationship() == 5) {
+        discount = 0.1;
+        finalPrice = finalPrice - ((finalPrice * 10.0) / 100.0);
+        
+    }  
+
+    return finalPrice;
+
 }

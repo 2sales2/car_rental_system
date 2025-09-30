@@ -1,4 +1,11 @@
+#ifndef DATE_H
+#define DATE_H
+
 #include <string>
+
+bool isValidDate(int day, int month, int year);
+long daysFromYearZero(int day, int month, int year);
+long daysDifference(int d1,int m1,int y1,int d2,int m2,int y2);
 
 class Date {
     
@@ -86,92 +93,16 @@ class Date {
         ~Date() {}
 
         // --- Getters ---
-        int getDay() {
-            return day;
-        }
-
-        int getMonth() {
-            return month;
-        }
-
-        int getYear() {
-            return year;
-        }
+        int getDay();
+        int getMonth();
+        int getYear();
 
         // Método para imprimir a data formatada
-        std::string toString() {
-            return std::to_string(day) + "-" + std::to_string(month) + "-" + std::to_string(year);
-        }
+        std::string toString();
 
         // --- Setters ---
-        void setDM(int aDay, int aMonth) {
-
-            // Validando o dia
-            if (aMonth >= 1 || aMonth <= 12) {
-                
-                month = aMonth;
-
-                // Definindo quantidade de dias em meses que possuem 31 dias
-                if(aMonth == 1 || aMonth == 3 || aMonth == 5 ||aMonth == 7 || aMonth ==8 || aMonth == 10 || month == 12) {
-
-                    if(aDay < 1 || aDay > 31) {
-                        day = 0;
-                    }
-
-                    else {
-                        day = aDay;
-                    }
-                }
-                
-                // Validando quantidade de dias em fevereiro
-                else if (aMonth == 2) {
-
-                    if (aDay < 1 || aDay > 28) {
-                        day = 0;
-                    }
-
-                    else {
-                        day = aDay;
-                    }
-
-                }
-                
-                // Validando quantidade de dias em meses que possuem 30 dias
-                else if (aMonth == 4 || aMonth == 6 || aMonth == 9 || aMonth == 11 ) {
-
-                    if (aDay < 1 || aDay > 30) {
-                        day = 0;
-                    }
-
-                    else{
-
-                        day = aDay;
-                    }
-
-                }
-
-            }
-
-            else{
-                month = 0;
-                day = 0;
-
-            }
-        } 
-
-
-        void setYear(int aYear) {
-
-            // Validando o ano
-            if (aYear < 0) {
-                year = 0;
-            }
-
-            else {
-                year = aYear;
-            }
-
-        }
+        void setDM(int aDay, int aMonth);
+        void setYear(int aYear);
 
     private:
     
@@ -181,3 +112,4 @@ class Date {
         int year;
 };
 
+#endif
