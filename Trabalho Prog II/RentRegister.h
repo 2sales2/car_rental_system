@@ -1,8 +1,9 @@
 #ifndef RENT_REGISTER_H
 #define RENT_REGISTER_H
 
-#include "Person.h"
+class Car;
 #include "Car.h"
+#include "Person.h"
 #include "Date.h"
 #include <string>
 
@@ -15,13 +16,13 @@ class RentRegister {
     
     public:
         // Construtor default
-        RentRegister(): person{}, car{}, register_id{generate_new_RID()},return_date{},rent_date{},rent_value{0.0},
+        RentRegister(): person{nullptr}, car{nullptr}, register_id{generate_new_RID()},return_date{},rent_date{},rent_value{0.0},
         paid{false},daily_rate{0.0},discount{0.0} {};
 
         // Construtor com parâmetros
-        RentRegister(Person* aperson, Car aCar,Date R_date,Date date, double aRent_value,
+        RentRegister(Person* aperson, Car *aCar , Date R_date,Date date, double aRent_value,
         bool debt, double aDaily_rate, double aDiscount):
-        person{aperson},car{&aCar},register_id{generate_new_RID()},return_date{R_date},rent_date{date},paid{debt} {
+        person{aperson},car{aCar},register_id{generate_new_RID()},return_date{R_date},rent_date{date},paid{debt} {
 
             if (aRent_value < 0) {
                 rent_value = 0.0;
@@ -59,16 +60,19 @@ class RentRegister {
         bool isPaid(); // Mudei o nome da função (dudu)
         double getDailyRate();
         double getDiscount();
+        double getTotalDebt();
 
         // --- Setters ---
         void registerTenant(Person *aPerson);
-        void registerCar(Car aCar);
+        void registerCar(Car* aCar);
         void registerRentDate(Date aDate);
         void registerRentValue(double value);
         void registerReturnDate(Date aDate);
         void registerValue(double value);
         void registerDailyRate(double aDaily_rate);
         void registerDiscount(double aDiscount);
+        void setPaidStatus(bool situation);
+        void setTotalDebt(double aDebt);
 
         // Método para visualizar os dados do registro
         std::string toString();

@@ -1,7 +1,6 @@
 #ifndef AGENCY_H
 #define AGENCY_H
 
-
 #include <iostream>
 #include <string>
 #include <vector>

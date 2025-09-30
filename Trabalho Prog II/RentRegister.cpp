@@ -20,6 +20,8 @@ double RentRegister::getDailyRate() {return daily_rate;}
 
 double RentRegister::getDiscount() {return discount;}
 
+double RentRegister::getTotalDebt() {return total_debt;}
+
 // -- SETTERS ---
 void RentRegister::registerTenant(Person* aPerson) {
 
@@ -33,7 +35,7 @@ void RentRegister::registerTenant(Person* aPerson) {
 
 }
 
-void RentRegister::registerCar(Car aCar) {car = &aCar;}
+void RentRegister::registerCar(Car* aCar) {car = aCar;}
 
 void RentRegister::registerRentDate(Date aDate) {rent_date = aDate;}
 
@@ -74,6 +76,19 @@ int generate_new_RID() {
 
 }
 
+void RentRegister::setPaidStatus(bool situation) {paid = situation;}
+
+void RentRegister::setTotalDebt(double aDebt) {
+    
+    if (aDebt < 0.0) {
+        total_debt = 0.0;
+    }
+
+    else {
+        total_debt = aDebt;
+    }
+}
+
 
 std::string RentRegister::toString(){
 
@@ -93,47 +108,4 @@ std::string RentRegister::toString(){
     return output;
 }
 
-double RentRegister::calculate_rentValue() {
 
-    double finalPrice = car->price;
-    // Verifica se é carro do ano
-    if (car->year == 2025) {
-        finalPrice = finalPrice + ((finalPrice * 50.0) / 100.0);
-    }
-    // Verifica se o carro tem até 2 anos
-    else if (car->year == 2023 || car->year == 2024) {
-        
-        finalPrice = finalPrice + ((finalPrice * 20.0) / 100.0);
-    }
-    // Verifica os niveis de relacionamento para aplicar o desconto
-    if (person->getRelationship() == 1) {
-        discount = 0.01;
-        finalPrice = finalPrice - ((finalPrice * 1.0) / 100.0);
-    }
-
-    else if (person->getRelationship() == 2) {
-        discount = 0.03;
-        finalPrice = finalPrice - ((finalPrice * 3.0) / 100.0);
-    }
-
-    else if (person->getRelationship() == 3) {
-        discount = 0.06;
-        finalPrice = finalPrice - ((finalPrice * 6.0) / 100.0);
-        
-    }
-
-    else if (person->getRelationship() == 4) {
-        discount = 0.08;
-        finalPrice = finalPrice - ((finalPrice * 8.0) / 100.0);
-        
-    }
-
-    else if (person->getRelationship() == 5) {
-        discount = 0.1;
-        finalPrice = finalPrice - ((finalPrice * 10.0) / 100.0);
-        
-    }  
-
-    return finalPrice;
-
-}

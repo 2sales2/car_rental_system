@@ -81,3 +81,42 @@ std::string Date::toString() {
     return std::to_string(day) + "-" + std::to_string(month) + "-" + std::to_string(year);
 }
 
+bool Date::isLeap() {
+
+    if ((year % 4 == 0 && year % 100 !=0) || (year % 400 == 0)) {
+        return true;
+    }
+
+    return false;
+}
+
+long Date::toDays() {
+
+    long total_days = day;
+
+    std::array<int,12> months{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+    // Dias dos meses anteriores
+    for (int i{0}; i < month - 1; i++) {
+        total_days += months.at(i);
+    }
+
+    // Ajuste para no bissexto
+    if (month > 2 && isLeap()) {
+        total_days += 1;
+    }
+
+    total_days += year * 365;
+
+    // Adicionar dias extras dos anos bissextos
+    total_days += (year / 4) - (year / 100) + (year / 400);
+
+    return total_days;
+
+}
+
+long Date::days_diferrence(Date &a_date, Date &another_date) {
+
+    return (a_date.toDays() - another_date.toDays());
+
+}

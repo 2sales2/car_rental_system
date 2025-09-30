@@ -2,6 +2,7 @@
 #define CAR_H
 
 #include <string>
+#include "RentRegister.h"
 
 bool verify_license_plate(const std::string &aPlate);
 

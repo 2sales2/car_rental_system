@@ -1,5 +1,6 @@
 #include "Payments.h"
-
+#include <cmath>
+#include <string>
 
 double Payments::calculate_car_acrescimo(int car_year) {
 
@@ -13,9 +14,7 @@ double Payments::calculate_car_acrescimo(int car_year) {
         return 0.20;
     }
 
-    else {
-        0.0;
-    }
+    return 0.0;
 }
 
 
@@ -23,7 +22,7 @@ double Payments::calculate_car_acrescimo(int car_year) {
 double Payments::calculate_client_discount(int relationship_level) {
 
     if (relationship_level < 1 || relationship_level > 5) {
-        return 0.0;
+        0.0;
     }
 
     else if (relationship_level == 1) {
@@ -46,12 +45,135 @@ double Payments::calculate_client_discount(int relationship_level) {
         return 0.08;
     }
 
+    return 0.0;
 }
 
 // Função que calcula o preço do aluguél
 double Payments::calculate_final_rent_value(RentRegister* reg) {
 
-    if (reg == nullptr || reg->person == nullptr || reg->car == nullptr) {
+    if (reg->person == nullptr) {
         return 0.0;
     }
+    
+    // Retorna a diferença em dias da data do aluguél do carro e da data de devolução
+    long days_diff = Date::days_diferrence(reg->return_date,reg->rent_date);
+
+    // converte para inteiro 
+    int rent_days = static_cast<int>(std::abs(days_diff));
+
+    double base_daily_rate = reg->daily_rate;
+
+    // cálculo do acréscimo do valor do carro
+    double car_acrescimo = calculate_car_acrescimo(reg->car->getYear());
+
+    double value_with_acrescimo = base_daily_rate * (1.0 + car_acrescimo);
+
+    // Calcula o valor do desconto
+    double discount_rate = calculate_client_discount(reg->person->getRelationship());
+
+    // Aplicação do Desconto
+    double finalDailyValue = value_with_acrescimo * (1.0 - discount_rate);
+
+    // Valor Total (Diária Final * Dias de Aluguel)
+    double finalValue = finalDailyValue * rent_days;
+    return finalValue;
+    
+}
+
+std::string Payments::process_car_return(RentRegister* reg, double newCarMileage, double amountPaid) {
+
+    std::string receipt;
+    double final_value = calculate_final_rent_value(reg);
+
+    Car* car = reg->getRentedCar();
+
+    // Atualiza a kilometragem do carro
+    if (car != nullptr) {
+
+        car->updateKM(newCarMileage);
+        car->setAvailability(true); 
+    }
+
+    else {
+        return "Erro: Carro não encontrado no registro.";
+    }
+
+    // Processar pagamento
+    if (amountPaid >= final_value) {
+        // Pagamento completo ou maior
+        reg->setPaidStatus(true);
+        reg->setTotalDebt(0.0);
+
+        //troco
+        double change = amountPaid - final_value;
+
+        // emissão do recibo
+        receipt = " RECIBO DE ALUGUEL E DEVOLUÇÃO \n" + 
+                  reg->toString() +
+                  "VALOR TOTAL DO ALUGUEL: R$ " + std::to_string(final_value) + "\n" +
+                  "VALOR PAGO: R$ " + std::to_string(amountPaid) + "\n" +
+                  "TROCO: R$ " + std::to_string(change) + "\n" +
+                  "SITUAÇÃO: PAGO \n";
+
+        if (change > 0.01) {
+            receipt += "TROCO DE R$ " + std::to_string(change) + " ENTREGUE AO CLIENTE.\n";
+        }
+
+    }
+    
+    else {
+
+        // Pagamento parcial ou nenhum
+        double debt = final_value - amountPaid;
+        reg->setPaidStatus(false);
+        reg->setTotalDebt(debt);
+
+
+        receipt = "REGISTRO DE DÍVIDA \n" +
+                    reg->toString() +
+                    "VALOR TOTAL DO ALUGUEL: R$ " + std::to_string(final_value) + "\n" +
+                    "VALOR PAGO: R$ " + std::to_string(amountPaid) + "\n" +
+                    "VALOR FALTANTE: R$ " + std::to_string(debt) + "\n" +
+                    "SITUAÇÃO: DÍVIDA PENDENTE \n";
+                   
+    }
+
+    return receipt;
+
+}
+
+std::string Payments::process_debt_payment(RentRegister* reg, double amountPaid) {
+
+    double current_debt = reg->total_debt;
+    std::string receipt;
+
+    // Verifica se há dívida pendente
+    if (current_debt <= 0.0) {
+        return "Nenhuma dívida pendente.";
+    }
+
+    if (amountPaid >= current_debt) {
+        reg->setPaidStatus(true);
+        reg->setTotalDebt(0.0);
+
+        // troco
+        double change = amountPaid - current_debt;
+
+        receipt = " RECIBO DE PAGAMENTO DE DÍVIDA \n" +
+                  reg->toString() +
+                  "VALOR DA DÍVIDA: R$ " + std::to_string(current_debt) + "\n" +
+                  "VALOR PAGO: R$ " + std::to_string(amountPaid) + "\n" +
+                  "SITUAÇÃO: DÍVIDA PAGA \n";
+
+        // verifica troca  
+        if (change > 0.01) {
+            receipt += "TROCO: R$" + std::to_string(change);
+        }
+    }
+
+    else {
+   
+    }
+
+
 }

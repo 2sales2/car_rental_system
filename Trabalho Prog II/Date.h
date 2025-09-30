@@ -3,9 +3,6 @@
 
 #include <string>
 
-bool isValidDate(int day, int month, int year);
-long daysFromYearZero(int day, int month, int year);
-long daysDifference(int d1,int m1,int y1,int d2,int m2,int y2);
 
 class Date {
     
@@ -96,9 +93,19 @@ class Date {
         int getDay();
         int getMonth();
         int getYear();
+        
 
         // Método para imprimir a data formatada
         std::string toString();
+
+        // Método para converter uma data em dias desde 01/01/0000
+        long toDays();
+        
+        //Método para verificar se o ano é bisexto
+        bool isLeap();
+        
+        //Método para calcular a diferença entre duas datas
+        static long days_diferrence(Date &a_date, Date &another_date);
 
         // --- Setters ---
         void setDM(int aDay, int aMonth);

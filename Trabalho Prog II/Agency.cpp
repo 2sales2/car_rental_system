@@ -74,11 +74,4 @@ RentRegister* Agency::get_register_by_id(int searched_id) {
     return nullptr;
 }
 
-
-
-
-int main() {
-
-
-}
     
