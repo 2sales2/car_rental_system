@@ -93,7 +93,7 @@ class Date {
         int getDay();
         int getMonth();
         int getYear();
-        
+        int getDaysInMonth();
 
         // Método para imprimir a data formatada
         std::string toString();
@@ -107,8 +107,12 @@ class Date {
         //Método para calcular a diferença entre duas datas
         static long days_diferrence(Date &a_date, Date &another_date);
 
+        // Função que verifica se uma data está dentro de um período
+        static bool isWhithinPeriod(Date &check_date ,Date &start_date, Date &end_date);
+
         // --- Setters ---
-        void setDM(int aDay, int aMonth);
+        void setDay(int aDay);
+        void setMonth(int aMonth);
         void setYear(int aYear);
 
     private:

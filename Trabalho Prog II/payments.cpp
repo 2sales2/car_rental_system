@@ -80,66 +80,75 @@ double Payments::calculate_final_rent_value(RentRegister* reg) {
     
 }
 
-std::string Payments::process_car_return(RentRegister* reg, double newCarMileage, double amountPaid) {
+bool Payments::process_car_return(RentRegister* reg,int new_km) {
 
-    std::string receipt;
-    double final_value = calculate_final_rent_value(reg);
 
     Car* car = reg->getRentedCar();
 
     // Atualiza a kilometragem do carro
     if (car != nullptr) {
 
-        car->updateKM(newCarMileage);
+        car->updateKM(new_km);
         car->setAvailability(true); 
+
+        return true;
     }
 
-    else {
-        return "Erro: Carro não encontrado no registro.";
-    }
+    return false;
+}
 
-    // Processar pagamento
-    if (amountPaid >= final_value) {
-        // Pagamento completo ou maior
-        reg->setPaidStatus(true);
-        reg->setTotalDebt(0.0);
+std::string Payments::process_payment(RentRegister* reg, double newCarMileage, double amountPaid, int new_km) {
 
-        //troco
-        double change = amountPaid - final_value;
+    std::string receipt;
+    double final_value = calculate_final_rent_value(reg);
+    bool returned = process_car_return(reg,new_km);
 
-        // emissão do recibo
-        receipt = " RECIBO DE ALUGUEL E DEVOLUÇÃO \n" + 
+
+    if (returned) {
+
+        if (amountPaid >= final_value) {
+            // Pagamento completo ou maior
+            reg->setPaidStatus(true);
+            reg->setTotalDebt(0.0);
+
+            // Calculo do troco
+            double change = amountPaid - final_value;
+
+            // emissão do recibo
+            receipt = " RECIBO DE ALUGUEL E DEVOLUÇÃO \n" + 
                   reg->toString() +
                   "VALOR TOTAL DO ALUGUEL: R$ " + std::to_string(final_value) + "\n" +
                   "VALOR PAGO: R$ " + std::to_string(amountPaid) + "\n" +
                   "TROCO: R$ " + std::to_string(change) + "\n" +
                   "SITUAÇÃO: PAGO \n";
 
-        if (change > 0.01) {
-            receipt += "TROCO DE R$ " + std::to_string(change) + " ENTREGUE AO CLIENTE.\n";
+            if (change > 0.01) {
+                receipt += "TROCO DE R$ " + std::to_string(change) + " ENTREGUE AO CLIENTE.\n";
+            }
+
         }
-
-    }
     
-    else {
+        else {
 
-        // Pagamento parcial ou nenhum
-        double debt = final_value - amountPaid;
-        reg->setPaidStatus(false);
-        reg->setTotalDebt(debt);
+            // Pagamento parcial ou nenhum
+            double debt = final_value - amountPaid;
+            reg->setPaidStatus(false);
+            reg->setTotalDebt(debt);
 
 
-        receipt = "REGISTRO DE DÍVIDA \n" +
+            receipt = "REGISTRO DE DÍVIDA \n" +
                     reg->toString() +
                     "VALOR TOTAL DO ALUGUEL: R$ " + std::to_string(final_value) + "\n" +
                     "VALOR PAGO: R$ " + std::to_string(amountPaid) + "\n" +
                     "VALOR FALTANTE: R$ " + std::to_string(debt) + "\n" +
                     "SITUAÇÃO: DÍVIDA PENDENTE \n";
                    
+        }
+
     }
 
     return receipt;
-
+   
 }
 
 std::string Payments::process_debt_payment(RentRegister* reg, double amountPaid) {
@@ -156,7 +165,7 @@ std::string Payments::process_debt_payment(RentRegister* reg, double amountPaid)
         reg->setPaidStatus(true);
         reg->setTotalDebt(0.0);
 
-        // troco
+        // Calculo do troco
         double change = amountPaid - current_debt;
 
         receipt = " RECIBO DE PAGAMENTO DE DÍVIDA \n" +
@@ -167,13 +176,39 @@ std::string Payments::process_debt_payment(RentRegister* reg, double amountPaid)
 
         // verifica troca  
         if (change > 0.01) {
-            receipt += "TROCO: R$" + std::to_string(change);
+            receipt += "TROCO: R$" + std::to_string(change) + " ENTREGUE AO CLIENTE.\n";
         }
+
     }
 
     else {
-   
+
+        // Calculo do valor restante da dívida
+        double remaining_debt = current_debt - amountPaid;
+        reg->setTotalDebt(remaining_debt);
+
+        receipt = " RECIBO DE PAGAMENTO PARCIAL DE DÍVIDA \n" +
+                  reg->toString() +
+                  "VALOR PAGO: R$ " + std::to_string(amountPaid) + "\n" +
+                  "VALOR RESTANTE DA DÍVIDA: R$ " + std::to_string(remaining_debt) + "\n";
+
     }
 
+    return receipt;
 
+
+}
+
+bool Payments::can_rent(RentRegister* reg) {
+
+    if (reg->person == nullptr) {
+        return false;
+    }
+
+    // Verifica se o cliente tem dívidas pendentes
+    if (reg->isPaid() == false && reg->total_debt > 0.0) {
+        return false;
+    }
+
+    return true;
 }

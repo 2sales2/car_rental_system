@@ -4,7 +4,7 @@
 #include "RentRegister.h"
 #include "Person.h"
 #include "Car.h"
-#include <memory>
+
 
 class Payments {
 
@@ -18,11 +18,17 @@ class Payments {
         // Função que calcula o preço do aluguél
         static double calculate_final_rent_value(RentRegister *reg);
 
-        // Processa a devolução e pagamento.
-        static std::string process_car_return(RentRegister* reg, double newCarMileage, double amountPaid);
+        // Processa a devolução
+        static bool process_car_return(RentRegister* reg, int newKm);
+
+        // Processa pagamento.
+        static std::string process_payment(RentRegister* reg, double newCarMileage, double amountPaid, int new_km);
     
-        //Permite que o cliente pague dívidas em aberto.
+        //Função que permite que o cliente pague dívidas em aberto.
         static std::string process_debt_payment(RentRegister* reg, double amountPaid);
+
+        // Função que verifica se o cliente pode alugar um carro
+        static bool can_rent(RentRegister* reg);
 
 };  
 
