@@ -25,7 +25,7 @@ void Person::setRelationship(int level) {
     }
 }
 
-std::string Person::toString(){
+std::string Person::toString()const{
     std::string output 
     = 
         "NOME : " + name + "\n" +
