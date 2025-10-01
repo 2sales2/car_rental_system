@@ -3,35 +3,42 @@
 
 #include <iostream>
 #include <string>
+#include <fstream>
 #include <vector>
-#include <memory>
 #include "LegalPerson.h"
 #include "NaturalPerson.h"
 #include "Person.h"
 #include "Car.h"
 #include "RentRegister.h"
 
+#define CLIENTS_FILE "customers.txt"
+#define CARS_FILE "cars.txt"
+#define REGISTERS_FILE "registers.txt"
 
 class Agency {
     public:
 
-        // Função para adicionar carro no vector
-        void registerCar(const Car &newCar);
+        void registerCar(Car *newCar);
+        void registerCustomer(Person *newCustomer);    
+        void registerReg(RentRegister *newReg);
 
-        // Função para adicionar pessoa no vector
-        void registerClient(std::shared_ptr<Person> newClient);
-        
-        Car* get_car_by_plate(std::string plate);
-        Car* get_car_by_model(std::string model);
-        
-        std::string reportCarsRented(Date startPeriod , Date endPeriod);
-        RentRegister* get_register_by_id(int id);
+        Car* getCarByPlate(const std::string plate);
+        Car* getCarByModel(const std::string model);
+        RentRegister* getRegisterById(const int id);
+        Person* getCustomer(const std::string document);
+
+        std::string reportCarsRented(const Date startPeriod , const Date endPeriod);
+        std::string billingReport(const Date startPeriod , const Date endPeriod); //relatorio de 
+        std::string listCars(bool available = false);
+        std::string reportIndebtCustomers();
+        std::string reportCustomerInf(const std::string document);
 
     private:
        
-        std::vector<Car> carsList {} ;
-        std::vector<std::shared_ptr<Person>> clients {};
+        std::vector<Car*> carsList {} ;
+        std::vector<Person*> customers {};
         std::vector<RentRegister*> registerList {};
 };
+
 
 #endif

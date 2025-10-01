@@ -2,11 +2,11 @@
 #include <iostream>
 
 // --- Getters ---
-std::string Person::getName() {return name;}
-std::string Person::getAdress() {return adress;}
-std::string Person::getPhone() {return phone_number;}
-int Person::getID() {return system_id;}
-int Person::getRelationship() {return costumer_relationship;}
+std::string Person::getName()const {return name;}
+std::string Person::getAdress()const {return adress;}
+std::string Person::getPhone()const {return phone_number;}
+int Person::getID()const {return system_id;}
+int Person::getRelationship()const {return costumer_relationship;}
 
 //--- Setters ---
 void Person::setName(std::string aName) {name = aName;}

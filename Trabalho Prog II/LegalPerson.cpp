@@ -59,3 +59,7 @@ bool verifyCnpj(const std::string &aCNPJ) {
     return false;
 }
 
+//funcao de identificacao da classe usada para polimorfismo
+bool LegalPerson::matchesIdentifier(const std::string& id)const{
+    return CNPJ == id ;
+}

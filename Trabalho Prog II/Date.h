@@ -90,25 +90,25 @@ class Date {
         ~Date() {}
 
         // --- Getters ---
-        int getDay();
-        int getMonth();
-        int getYear();
-        int getDaysInMonth();
+        int getDay()const;
+        int getMonth()const;
+        int getYear()const;
+        int getDaysInMonth()const;
 
         // Método para imprimir a data formatada
-        std::string toString();
+        std::string toString()const;
 
         // Método para converter uma data em dias desde 01/01/0000
-        long toDays();
+        long toDays()const;
         
         //Método para verificar se o ano é bisexto
-        bool isLeap();
+        bool isLeap()const;
         
         //Método para calcular a diferença entre duas datas
         static long days_diferrence(Date &a_date, Date &another_date);
 
         // Função que verifica se uma data está dentro de um período
-        static bool isWhithinPeriod(Date &check_date ,Date &start_date, Date &end_date);
+        static bool isWhithinPeriod(const Date &check_date ,const Date &start_date,const Date &end_date);
 
         // --- Setters ---
         void setDay(int aDay);

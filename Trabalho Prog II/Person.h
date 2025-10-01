@@ -34,11 +34,11 @@ class Person {
         phone_number{aPerson.phone_number}, system_id{aPerson.system_id}, costumer_relationship{aPerson.costumer_relationship} {}
         
         // --- Getters ---
-        std::string getName();
-        std::string getAdress();
-        std::string getPhone();
-        int getID();
-        int getRelationship();
+        std::string getName()const;
+        std::string getAdress()const;
+        std::string getPhone()const;
+        int getID()const;
+        int getRelationship()const;
         
         // Destrutor
         virtual ~Person() = default;
@@ -47,11 +47,12 @@ class Person {
         void setName(std::string aName);
         void setAdress(std::string anAdress);
         void setPhone(std::string aPhone);
-        void generateID();
         void setRelationship(int level);
-
-        virtual std::string toString();
-
+        
+        void generateID();
+        virtual std::string toString()const;
+        virtual bool matchesIdentifier(const std::string& id) const = 0;
+    
     protected:
     // Dados-membro
         std::string name;

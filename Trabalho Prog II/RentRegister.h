@@ -17,7 +17,7 @@ class RentRegister {
     public:
         // Construtor default
         RentRegister(): person{nullptr}, car{nullptr}, register_id{generate_new_RID()},return_date{},rent_date{},rent_value{0.0},
-        paid{false},daily_rate{0.0},discount{0.0} {};
+        paid{false},daily_rate{0.0},discount{0.0},total_debt{0.0} {};
 
         // Construtor com parâmetros
         RentRegister(Person* aperson, Car *aCar , Date R_date,Date date, double aRent_value,
@@ -26,10 +26,12 @@ class RentRegister {
 
             if (aRent_value < 0) {
                 rent_value = 0.0;
+                total_debt = 0.0;
             }
             
             else {
                 rent_value = aRent_value;
+                total_debt = aRent_value;
             }
 
             if (aDaily_rate < 0) {
@@ -51,16 +53,16 @@ class RentRegister {
         }
        
         // --- Getters ---
-        Person* getTenant();
-        Car* getRentedCar();
-        int getRegisterID();
-        Date getReturnDate();
-        Date getRentDate();
-        double getRentValue();
-        bool isPaid(); // Mudei o nome da função (dudu)
-        double getDailyRate();
-        double getDiscount();
-        double getTotalDebt();
+        Person* getTenant()const;
+        Car* getRentedCar()const;
+        int getRegisterID()const;
+        Date getReturnDate()const;
+        const Date& getRentDate()const;
+        double getRentValue()const;
+        bool isPaid()const; // Mudei o nome da função (dudu)
+        double getDailyRate()const;
+        double getDiscount()const;
+        double getTotalDebt()const;
 
         // --- Setters ---
         void registerTenant(Person *aPerson);
@@ -83,7 +85,7 @@ class RentRegister {
     private:
         // Dados-membro
         Person* person;
-        Car* car; 
+        Car* car;
 
         int register_id;
 

@@ -65,7 +65,7 @@ class Car {
             km{aCar.km},availability{aCar.availability},observations{aCar.observations},price{aCar.price} {}
         
         // --- Getters ---
-        std::string getPlate();
+        std::string getPlate()const;
         int getYear();
 
         std::string getModel();

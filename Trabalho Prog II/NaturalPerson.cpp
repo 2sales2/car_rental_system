@@ -64,3 +64,7 @@ bool verify_cpf(const std::string &aCPF) {
 
     return false;
 }
+
+bool NaturalPerson::matchesIdentifier(const std::string& id)const{
+    return CPF == id ;
+}

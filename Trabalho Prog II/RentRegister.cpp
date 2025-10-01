@@ -2,25 +2,25 @@
 #include <iostream>
 
 // -- GETTERS ---
-Person* RentRegister::getTenant() {return person;}
+Person* RentRegister::getTenant()const {return person;}
 
-Car* RentRegister::getRentedCar() {return car;}
+Car* RentRegister::getRentedCar()const {return car;}
 
-int RentRegister::getRegisterID() {return register_id;}
+int RentRegister::getRegisterID()const {return register_id;}
 
-Date RentRegister::getReturnDate() {return return_date;}
+Date RentRegister::getReturnDate()const {return return_date;}
 
-Date RentRegister::getRentDate() {return rent_date;}
+const Date &RentRegister::getRentDate()const {return rent_date;}
 
-double RentRegister::getRentValue() {return rent_value;}
+double RentRegister::getRentValue()const {return rent_value;}
 
-bool RentRegister::isPaid() {return paid;}
+bool RentRegister::isPaid()const {return paid;}
 
-double RentRegister::getDailyRate() {return daily_rate;}
+double RentRegister::getDailyRate()const {return daily_rate;}
 
-double RentRegister::getDiscount() {return discount;}
+double RentRegister::getDiscount()const {return discount;}
 
-double RentRegister::getTotalDebt() {return total_debt;}
+double RentRegister::getTotalDebt()const {return total_debt;}
 
 // -- SETTERS ---
 void RentRegister::registerTenant(Person* aPerson) {

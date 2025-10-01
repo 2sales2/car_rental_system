@@ -42,6 +42,9 @@ class NaturalPerson: public Person {
         
         std::string toString();
         
+
+        bool matchesIdentifier(const std::string& id)const;
+        
     private:
         // Dados-membro
         std::string CPF;

@@ -2,7 +2,7 @@
 #include <iostream>
 
 //GETTERS
-std::string Car::getPlate() {return license_plate;}
+std::string Car::getPlate()const {return license_plate;}
 int Car::getYear() {return year;}
 std::string Car::getModel() {return model;}
 int Car::getKm() {return km;}

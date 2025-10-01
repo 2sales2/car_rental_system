@@ -4,11 +4,11 @@
 const std::array<int,12> months{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
 // --- Getters ---
-int Date::getDay() {return day;}
-int Date::getMonth() {return month;}
-int Date::getYear() {return year;}
+int Date::getDay()const {return day;}
+int Date::getMonth()const {return month;}
+int Date::getYear()const {return year;}
 
-int Date::getDaysInMonth() {
+int Date::getDaysInMonth()const {
 
     if (month < 1 || month > 12) {
         return 0; 
@@ -86,11 +86,11 @@ void Date::setYear(int aYear) {
             
 }
 
-std::string Date::toString() {
+std::string Date::toString()const {
     return std::to_string(day) + "-" + std::to_string(month) + "-" + std::to_string(year);
 }
 
-bool Date::isLeap() {
+bool Date::isLeap()const {
 
     if ((year % 4 == 0 && year % 100 !=0) || (year % 400 == 0)) {
         return true;
@@ -99,7 +99,7 @@ bool Date::isLeap() {
     return false;
 }
 
-long Date::toDays() {
+long Date::toDays()const {
 
     long total_days = day;
 
@@ -128,7 +128,7 @@ long Date::days_diferrence(Date &a_date, Date &another_date) {
 
 }
 
-bool Date::isWhithinPeriod(Date &check_date,Date &start_date, Date &end_date) {
+bool Date::isWhithinPeriod(const Date &check_date, const Date &start_date,const Date &end_date) {
     
     long currentDays = check_date.toDays(); 
     long startDays = start_date.toDays();
