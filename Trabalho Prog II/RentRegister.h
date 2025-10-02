@@ -6,8 +6,9 @@ class Car;
 #include "Person.h"
 #include "Date.h"
 #include <string>
+#include "Payments.h"
 
-int generate_new_RID();
+
 
 
 class RentRegister {
@@ -16,40 +17,15 @@ class RentRegister {
     
     public:
         // Construtor default
-        RentRegister(): person{nullptr}, car{nullptr}, register_id{generate_new_RID()},return_date{},rent_date{},rent_value{0.0},
+        RentRegister(): person{nullptr}, car{nullptr}, register_id{count++},return_date{},rent_date{},rent_value{0.0},
         paid{false},daily_rate{0.0},discount{0.0},total_debt{0.0} {};
 
         // Construtor com parâmetros
-        RentRegister(Person* aperson, Car *aCar , Date R_date,Date date, double aRent_value,
-        bool debt, double aDaily_rate, double aDiscount):
-        person{aperson},car{aCar},register_id{generate_new_RID()},return_date{R_date},rent_date{date},paid{debt} {
-
-            if (aRent_value < 0) {
-                rent_value = 0.0;
-                total_debt = 0.0;
-            }
-            
-            else {
-                rent_value = aRent_value;
-                total_debt = aRent_value;
-            }
-
-            if (aDaily_rate < 0) {
-                daily_rate = 0.0;
-            }
-            
-            else {
-                daily_rate = aDaily_rate;
-            }
-
-
-            if (aDiscount< 0) {
-                discount = 0.0;
-            }
-            
-            else {
-                discount = aDiscount;
-            }
+        RentRegister(Person* aperson, Car *aCar , Date R_date,Date date,
+        double dailyValue ,bool debt):
+        person{aperson},car{aCar},register_id{count++},return_date{R_date},rent_date{date},paid{debt},rent_value{calculate_rentValue()} ,
+        daily_rate{dailyValue},discount{} {
+                        
         }
        
         // --- Getters ---
@@ -87,6 +63,7 @@ class RentRegister {
         Person* person;
         Car* car;
 
+        static int count ;
         int register_id;
 
         Date return_date;

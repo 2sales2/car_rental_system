@@ -49,36 +49,6 @@ double Payments::calculate_client_discount(int relationship_level) {
 }
 
 // Função que calcula o preço do aluguél
-double Payments::calculate_final_rent_value(RentRegister* reg) {
-
-    if (reg->person == nullptr) {
-        return 0.0;
-    }
-    
-    // Retorna a diferença em dias da data do aluguél do carro e da data de devolução
-    long days_diff = Date::days_diferrence(reg->return_date,reg->rent_date);
-
-    // converte para inteiro 
-    int rent_days = static_cast<int>(std::abs(days_diff));
-
-    double base_daily_rate = reg->daily_rate;
-
-    // cálculo do acréscimo do valor do carro
-    double car_acrescimo = calculate_car_acrescimo(reg->car->getYear());
-
-    double value_with_acrescimo = base_daily_rate * (1.0 + car_acrescimo);
-
-    // Calcula o valor do desconto
-    double discount_rate = calculate_client_discount(reg->person->getRelationship());
-
-    // Aplicação do Desconto
-    double finalDailyValue = value_with_acrescimo * (1.0 - discount_rate);
-
-    // Valor Total (Diária Final * Dias de Aluguel)
-    double finalValue = finalDailyValue * rent_days;
-    return finalValue;
-    
-}
 
 bool Payments::process_car_return(RentRegister* reg,int new_km) {
 
@@ -100,7 +70,7 @@ bool Payments::process_car_return(RentRegister* reg,int new_km) {
 std::string Payments::process_payment(RentRegister* reg, double newCarMileage, double amountPaid, int new_km) {
 
     std::string receipt;
-    double final_value = calculate_final_rent_value(reg);
+    double final_value = reg->calculate_rentValue();
     bool returned = process_car_return(reg,new_km);
 
 

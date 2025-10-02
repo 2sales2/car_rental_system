@@ -9,7 +9,9 @@ SOURCES = \
 	Person.cpp \
 	Car.cpp \
 	RentRegister.cpp \
-	Date.cpp
+	Date.cpp\
+	Payments.cpp\
+	interfaceScreens.cpp
 
 
 OBJECTS = $(SOURCES:.cpp=.o)

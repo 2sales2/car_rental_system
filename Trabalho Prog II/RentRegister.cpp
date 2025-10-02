@@ -1,6 +1,6 @@
 #include "RentRegister.h"
 #include <iostream>
-
+int RentRegister::count = 1  ;
 // -- GETTERS ---
 Person* RentRegister::getTenant()const {return person;}
 
@@ -59,23 +59,6 @@ void RentRegister::registerDailyRate(double aDaily_rate) {daily_rate = aDaily_ra
 
 void RentRegister::registerDiscount(double aDiscount) {discount = aDiscount;}
 
-int generate_new_RID() {
-
-    // Códigos de registros terão prefixo 2 no inicio de cada ID
-    std::string new_id{"2"};
-
-    std::random_device seed{};
-    std::default_random_engine engine{seed()};
-    std::uniform_int_distribution generator{1000,9999};
-
-    int ID = generator(engine);
-
-    new_id += std::to_string(ID);
-
-    return std::stoi(new_id);
-
-}
-
 void RentRegister::setPaidStatus(bool situation) {paid = situation;}
 
 void RentRegister::setTotalDebt(double aDebt) {
@@ -107,5 +90,34 @@ std::string RentRegister::toString(){
         
     return output;
 }
+
+double RentRegister::calculate_rentValue(){
+
+    
+    // Retorna a diferença em dias da data do aluguél do carro e da data de devolução
+    long days_diff = Date::days_diferrence(return_date,rent_date);
+
+    // converte para inteiro 
+    int rent_days = static_cast<int>(std::abs(days_diff));
+
+    double base_daily_rate = daily_rate;
+
+    // cálculo do acréscimo do valor do carro
+    double car_acrescimo = Payments::calculate_car_acrescimo(car->getYear());
+
+    double value_with_acrescimo = base_daily_rate * (1.0 + car_acrescimo);
+
+    // Calcula o valor do desconto
+    double discount_rate = Payments::calculate_client_discount(person->getRelationship());
+
+    // Aplicação do Desconto
+    double finalDailyValue = value_with_acrescimo * (1.0 - discount_rate);
+
+    // Valor Total (Diária Final * Dias de Aluguel)
+    double finalValue = finalDailyValue * rent_days;
+    return finalValue;
+    
+}
+
 
 

@@ -1,7 +1,7 @@
 #ifndef PAYMENTS_H
 #define PAYMENTS_H
 
-#include "RentRegister.h"
+class RentRegister; 
 #include "Person.h"
 #include "Car.h"
 
@@ -15,9 +15,7 @@ class Payments {
         // Função que calcula o desconto do cliente dado um nível de relacionamento
         static double calculate_client_discount(int relationship_level);
 
-        // Função que calcula o preço do aluguél
-        static double calculate_final_rent_value(RentRegister *reg);
-
+       
         // Processa a devolução
         static bool process_car_return(RentRegister* reg, int newKm);
 
