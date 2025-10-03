@@ -67,7 +67,7 @@ bool Payments::process_car_return(RentRegister* reg,int new_km) {
     return false;
 }
 
-std::string Payments::process_payment(RentRegister* reg, double newCarMileage, double amountPaid, int new_km) {
+std::string Payments::process_payment(RentRegister* reg, double amountPaid, int new_km) {
 
     std::string receipt;
     double final_value = reg->calculate_rentValue();
@@ -165,7 +165,6 @@ std::string Payments::process_debt_payment(RentRegister* reg, double amountPaid)
     }
 
     return receipt;
-
 
 }
 

@@ -8,12 +8,14 @@ void Agency::registerCar(Car *newCar){
 }
 
 void Agency::registerCustomer(Person *newCustomer){
+
     if(newCustomer){
         customers.push_back(newCustomer);
     }
 }
 
 void Agency::registerReg(RentRegister *newReg){
+    
     if(newReg){
         registerList.push_back(newReg);
     }
@@ -95,6 +97,7 @@ Person* Agency::getCustomer(const std::string document){
 
 std::string Agency::reportCarsRented(const Date startPeriod , const Date endPeriod){
     int count{0} ;
+
     std::string output{"RELATORIO DE CARROS ALUGADOS:\n"} ;
     output += "INICIO : " +startPeriod.toString() + "\n" +
               "FIM : " +endPeriod.toString() + "\n\n";  
@@ -107,7 +110,7 @@ std::string Agency::reportCarsRented(const Date startPeriod , const Date endPeri
         }
     }
     output += "--------------------------\n";
-    output += "TOTAL : " + std::to_string(count) + "\n" ;
+    output += "TOTAL:" + std::to_string(count) + "\n" ;
     
     return output ;
 }
@@ -118,8 +121,10 @@ std::string Agency::billingReport(const Date startPeriod , const Date endPeriod)
     std::string output{"RELATORIO DE FATURAMENTO:\n"};
     output += "INICIO : " + startPeriod.toString() + "\n" +
               "FIM : " + endPeriod.toString() + "\n" ; 
+
     double total {0.0} ;
     int total_reg{0} ;
+    
     for(RentRegister * currentReg : registerList){
         if(Date::isWhithinPeriod(currentReg->getRentDate() , startPeriod , endPeriod) && currentReg->isPaid() == true){
             output += "--------------------------\n";
@@ -130,8 +135,8 @@ std::string Agency::billingReport(const Date startPeriod , const Date endPeriod)
     }
 
     output += "\n--------------------------\n";
-    output+= "TOTAL DE REGISTROS : " + std::to_string(total_reg) + "\n" + 
-             "TOTAL : " + std::to_string(total) + "\n";
+    output+= "TOTAL DE REGISTROS: " + std::to_string(total_reg) + "\n" + 
+             "TOTAL: " + std::to_string(total) + "\n";
 
     return output ;
 }
@@ -157,8 +162,8 @@ std::string Agency::listCars(bool available){
         }
 
     }
-    output += "\n--------------------------\n";
-    output += "TOTAL : " + std::to_string(count) ;
+    output += "\n--------------------------";
+    output += "\nTOTAL: " + std::to_string(count) ;
 
     return output ;
 }
@@ -166,9 +171,12 @@ std::string Agency::listCars(bool available){
 std::string Agency::reportIndebtCustomers(){
     int count{0};
     double total{0.0};
+
     std::string output{"RELATORIO DE CLIENTES ENDIVIDADOS :\n\n"};
+
     for(RentRegister * currentReg : registerList){
-        if(currentReg->isPaid() == false){
+
+        if(currentReg->isPaid() == false && currentReg->getRentedCar()->getAvailability() == true){
             output += "--------------------------\n";
             output += currentReg->getTenant()->toString() + "\n" +
                       currentReg->getRentedCar()->toString() + "\n" +                      
@@ -187,4 +195,26 @@ std::string Agency::reportIndebtCustomers(){
 std::string Agency::reportCustomerInf(const std::string document){
     Person * currentPerson = getCustomer(document);
     return currentPerson->toString();
+}
+
+
+bool Agency::hasPendingDebt(Person* customer){
+    
+
+    if (customer == nullptr) {
+        return false; 
+    }
+
+    for (RentRegister* reg : registerList) { 
+    
+        if (reg != nullptr && reg->getTenant() == customer) {
+            
+
+            if (reg->isPaid() == false && reg->getTotalDebt() > 0.0) {
+                
+                return true; 
+            }
+        }
+    }
+    return false;
 }
