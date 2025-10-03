@@ -1,5 +1,6 @@
 #include "RentRegister.h"
 #include <iostream>
+
 int RentRegister::count = 1  ;
 // -- GETTERS ---
 Person* RentRegister::getTenant()const {return person;}

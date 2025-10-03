@@ -20,7 +20,7 @@ class Payments {
         static bool process_car_return(RentRegister* reg, int newKm);
 
         // Processa pagamento.
-        static std::string process_payment(RentRegister* reg, double newCarMileage, double amountPaid, int new_km);
+        static std::string process_payment(RentRegister* reg, double amountPaid, int new_km);
     
         //Função que permite que o cliente pague dívidas em aberto.
         static std::string process_debt_payment(RentRegister* reg, double amountPaid);

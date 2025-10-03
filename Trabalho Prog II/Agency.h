@@ -26,9 +26,10 @@ class Agency {
         Car* getCarByModel(const std::string model);
         RentRegister* getRegisterById(const int id);
         Person* getCustomer(const std::string document);
+        bool hasPendingDebt(Person* customer);
 
         std::string reportCarsRented(const Date startPeriod , const Date endPeriod);
-        std::string billingReport(const Date startPeriod , const Date endPeriod); //relatorio de 
+        std::string billingReport(const Date startPeriod , const Date endPeriod);
         std::string listCars(bool available = false);
         std::string reportIndebtCustomers();
         std::string reportCustomerInf(const std::string document);

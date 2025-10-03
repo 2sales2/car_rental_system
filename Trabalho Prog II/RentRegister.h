@@ -8,9 +8,6 @@ class Car;
 #include <string>
 #include "Payments.h"
 
-
-
-
 class RentRegister {
 
     friend class Payments;
@@ -21,10 +18,29 @@ class RentRegister {
         paid{false},daily_rate{0.0},discount{0.0},total_debt{0.0} {};
 
         // Construtor com parâmetros
-        RentRegister(Person* aperson, Car *aCar , Date R_date,Date date,
-        double dailyValue ,bool debt):
-        person{aperson},car{aCar},register_id{count++},return_date{R_date},rent_date{date},paid{debt},rent_value{calculate_rentValue()} ,
-        daily_rate{dailyValue},discount{} {
+        RentRegister(Person* aperson, Car *aCar , Date R_date, Date date, double dailyValue):
+        person{aperson},car{aCar},register_id{count++},return_date{R_date},rent_date{date},rent_value{calculate_rentValue()} ,
+        daily_rate{dailyValue} {
+
+            // Valida o valor da diária
+            if (dailyValue < 0.0) {
+                daily_rate = 0.0;
+            } 
+            
+            else {
+                daily_rate = dailyValue;
+            }
+            
+            // Calcula e define o descont
+            if (person != nullptr) {
+                discount = Payments::calculate_client_discount(aperson->getRelationship()); 
+            } 
+
+            else {
+                discount = 0.0;
+            }
+            
+            rent_value = calculate_rentValue(); 
                         
         }
        
